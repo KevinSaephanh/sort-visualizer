@@ -1,34 +1,74 @@
 import * as React from "react";
-import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { Navbar, Nav, Dropdown, Button } from "react-bootstrap";
+import "./Header.css";
 
-export default function Header() {
-    const handleClick = () => {};
+type AppProps = {
+    algorithm: string;
+    mode: string;
+    handleClickAlgorithm: (algorithm: any) => any;
+    handleClickMode: (mode: any) => any;
+};
 
+export const Header = ({
+    algorithm,
+    mode,
+    handleClickAlgorithm,
+    handleClickMode,
+}: AppProps) => {
     return (
-        <Navbar bg="light" expand="lg">
-            <Navbar.Brand href="#home">Sort Visualizer</Navbar.Brand>
+        <Navbar bg="primary" expand="lg">
+            <Navbar.Brand href="">Sort Visualizer</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
+            <Navbar.Collapse>
                 <Nav className="mr-auto">
-                    <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                        <NavDropdown.Item href="#action/3.1">
-                            Action
-                        </NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.2">
-                            Another action
-                        </NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.3">
-                            Something
-                        </NavDropdown.Item>
-                        <NavDropdown.Divider />
-                        <NavDropdown.Item href="#action/3.4">
-                            Separated link
-                        </NavDropdown.Item>
-                    </NavDropdown>
-                    <Nav.Link href="#home">RESET</Nav.Link>
-                    <Nav.Link href="#link">SORT</Nav.Link>
+                    <Dropdown>
+                        <Dropdown.Toggle id="dropdown-basic">
+                            {algorithm}
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                            <Button
+                                name="Bubble Sort"
+                                onClick={handleClickAlgorithm}
+                            >
+                                Bubble sort
+                            </Button>
+                            <Button
+                                name="Quick Sort"
+                                onClick={handleClickAlgorithm}
+                            >
+                                Quicksort
+                            </Button>
+                            <Button
+                                name="Insertion Sort"
+                                onClick={handleClickAlgorithm}
+                            >
+                                Insertion sort
+                            </Button>
+                            <Button
+                                name="Merge Sort"
+                                onClick={handleClickAlgorithm}
+                            >
+                                Merge sort
+                            </Button>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                    <Button
+                        className="reset-btn"
+                        name="Reset"
+                        onClick={handleClickMode}
+                    >
+                        Reset
+                    </Button>
+                    <Button
+                        className="sort-btn"
+                        name="Sort"
+                        disabled={algorithm === "Algorithms"}
+                        onClick={handleClickMode}
+                    >
+                        Sort
+                    </Button>
                 </Nav>
             </Navbar.Collapse>
         </Navbar>
     );
-}
+};

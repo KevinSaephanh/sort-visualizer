@@ -1,0 +1,42 @@
+.navbar {
+    margin-bottom: 50px;
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bolder !important;
+}
+
+.navbar-toggler {
+    width: 60px !important;
+    border: 2px solid #444444 !important;
+}
+
+.navbar button {
+    font-weight: 700 !important;
+}
+
+.reset-btn,
+.sort-btn {
+    text-align: left;
+}
+
+.dropdown-menu {
+    background-color: transparent !important;
+}
+
+.dropdown-menu button {
+    display: block !important;
+    text-align: left;
+}
+
+@media only screen and (max-width: 700px) {
+    .navbar {
+        margin-bottom: 15px;
+    }
+
+    .reset-btn,
+    .sort-btn {
+        width: 150px !important;
+    }
+}
