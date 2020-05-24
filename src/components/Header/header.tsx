@@ -36,7 +36,7 @@ export const Header = ({
                                 name="Quick Sort"
                                 onClick={handleClickAlgorithm}
                             >
-                                Quicksort
+                                Quick sort
                             </Button>
                             <Button
                                 name="Insertion Sort"

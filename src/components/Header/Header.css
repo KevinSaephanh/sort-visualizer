@@ -1,5 +1,6 @@
 .navbar {
     margin-bottom: 50px;
+    width: 100vw !important;
 }
 
 .navbar-brand {

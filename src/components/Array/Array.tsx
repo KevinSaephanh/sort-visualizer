@@ -1,6 +1,7 @@
 import * as React from "react";
 import Element from "../../models/Element";
-import SpiritedAway from "../../assets/spirited_away.jpg";
+import ElementUtils from "../../utils/ElementUtils";
+import * as SortUtils from "../../utils/algorithms/index";
 import "./Array.css";
 
 type AppProps = {
@@ -8,43 +9,47 @@ type AppProps = {
     mode: string;
 };
 
+const elements: Element[] = ElementUtils.initArray();
+
 export const Array = ({ algorithm, mode }: AppProps) => {
-    const elements: Element[] = [];
+    const [arr, setArr] = React.useState(elements);
 
     React.useEffect(() => {
         switch (mode) {
             case "Sort":
+                sort(algorithm);
                 break;
             case "Reset":
-                elements.length = 0;
+                const temp = [...arr];
+                temp.splice(0, temp.length, ...ElementUtils.initArray());
+                setArr(temp);
                 break;
             default:
-                initArray();
                 break;
         }
     }, [mode]);
 
-    const initArray = (): void => {
-        // Generate a series of random numbers for each element in the array
-        for (let i = 0; i < 50; i++) {
-            const randNum = Math.floor(Math.random() * (50 - 5) + 5);
-            const newElement: Element = {
-                image: SpiritedAway,
-                length: randNum,
-            };
-
-            elements.push(newElement);
+    const sort = (sorter: string): void => {
+        switch (sorter) {
+            case "Bubble Sort":
+                SortUtils.bubbleSort(arr);
+                break;
         }
+        console.log(sorter);
     };
 
     return (
         <div className="content">
-            <img src={SpiritedAway} alt="" />
-            {elements.map((element, key) => {
+            {arr.map((element, key) => {
+                const { length, image, visited } = element;
+
                 return (
-                    <div key={key}>
-                        <img src={element.image} alt="" />
-                        {element.length} HELLO
+                    <div
+                        className={`element element-visited-${visited}`}
+                        id={`element-${key}`}
+                        key={key}
+                    >
+                        <img src={image} alt="" style={{ height: length }} />
                     </div>
                 );
             })}
