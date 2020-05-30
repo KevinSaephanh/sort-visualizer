@@ -1,21 +1,24 @@
 import Element from "../../models/Element";
 
-export const bubbleSort = (array: Element[]): Element[] => {
-    for (let i = 0; i < array.length; i++) {
-        for (let j = 0; j < array.length - i - 1; j++) {
-            const firstNode: Element = array[j];
-            const secondNode: Element = array[j + 1];
+export const bubbleSort = (array: Element[]): (Element | Boolean)[][] => {
+    const swapSet: (Element | Boolean)[][] = [];
+    const copyArr = [...array];
+    let swapped: Boolean = false;
 
-            firstNode.visited = true;
-            secondNode.visited = true;
+    do {
+        swapped = false;
+        for (let i = 0; i < array.length - 1; i++) {
+            const current: Element = copyArr[i];
+            const next: Element = copyArr[i + 1];
 
-            // If first node is greater than second, swap places
-            if (firstNode.length > secondNode.length) {
-                [array[j], array[j + 1]] = [secondNode, firstNode];
-            }
+            // If first element is greater than second, swap places
+            if (current && next && current.length > next.length) {
+                swapSet.push([current, next, true]);
+                [copyArr[i], copyArr[i + 1]] = [next, current];
+                swapped = true;
+            } else swapSet.push([current, next, false]);
         }
-    }
+    } while (swapped);
 
-    console.log(array);
-    return array;
+    return swapSet;
 };

@@ -1,9 +1,10 @@
 .content {
     height: 80vh;
-    width: 90vw;
+    width: 95vw;
     margin: 0 auto;
     display: flex;
-    padding-left: 2px;
+    align-items: flex-start;
+    padding: 1px;
     border-left: 3px solid #444444;
     border-bottom: 3px solid #444444;
 }
@@ -12,20 +13,29 @@
     width: 3%;
     display: inline-block;
     align-self: flex-end;
-}
-
-.element-visited-true {
-    border: 1.2px solid blueviolet;
+    background: black;
+    margin-right: 1.5px;
 }
 
 img {
-    width: 100%;
+    width: 50px;
     display: block;
 }
 
+@media only screen and (max-width: 900px) {
+    img {
+        width: 40px;
+    }
+}
+
 @media only screen and (max-width: 600px) {
+    .element {
+        margin-right: 1px;
+        width: 15px;
+    }
+
     .content {
         height: 70vh;
-        width: 95vw;
+        width: 99vw;
     }
 }
