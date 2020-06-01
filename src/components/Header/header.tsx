@@ -30,25 +30,31 @@ export const Header = ({
                                 name="Bubble Sort"
                                 onClick={handleClickAlgorithm}
                             >
-                                Bubble sort
+                                Bubble Sort
                             </Button>
                             <Button
                                 name="Quick Sort"
                                 onClick={handleClickAlgorithm}
                             >
-                                Quick sort
+                                Quick Sort
                             </Button>
                             <Button
                                 name="Insertion Sort"
                                 onClick={handleClickAlgorithm}
                             >
-                                Insertion sort
+                                Insertion Sort
                             </Button>
                             <Button
                                 name="Merge Sort"
                                 onClick={handleClickAlgorithm}
                             >
-                                Merge sort
+                                Merge Sort
+                            </Button>
+                            <Button
+                                name="Selection Sort"
+                                onClick={handleClickAlgorithm}
+                            >
+                                Selection Sort
                             </Button>
                         </Dropdown.Menu>
                     </Dropdown>

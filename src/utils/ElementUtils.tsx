@@ -41,4 +41,17 @@ export default class ElementUtils {
         if (nums.length <= 0) return true;
         return Math.max(...nums) >= n;
     };
+
+    static swap = (
+        arr: Element[],
+        current: Element,
+        next: Element
+    ): Element[] => {
+        const temp = [...arr];
+        const currIndex = arr.indexOf(current);
+        const nextIndex = arr.indexOf(next);
+
+        [temp[currIndex], temp[nextIndex]] = [temp[nextIndex], temp[currIndex]];
+        return temp;
+    };
 }

@@ -37,7 +37,9 @@ export const Array = ({ algorithm, mode }: AppProps) => {
             case "Quick Sort":
             case "Merge Sort":
             case "Selection Sort":
+                return SortUtils.selectionSort(arr);
             case "Insertion Sort":
+                return SortUtils.insertionSort(arr);
             default:
                 return null;
         }
