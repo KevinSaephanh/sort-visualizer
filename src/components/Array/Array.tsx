@@ -21,9 +21,7 @@ export const Array = ({ algorithm, mode }: AppProps) => {
                 animateSort(sortedArr);
                 break;
             case "Reset":
-                const temp = [...arr];
-                temp.splice(0, temp.length, ...ElementUtils.initArray());
-                setArr(temp);
+                resetArr();
                 break;
             default:
                 break;
@@ -35,7 +33,9 @@ export const Array = ({ algorithm, mode }: AppProps) => {
             case "Bubble Sort":
                 return SortUtils.bubbleSort(arr);
             case "Quick Sort":
+                return SortUtils.quickSort(arr);
             case "Merge Sort":
+                return null;
             case "Selection Sort":
                 return SortUtils.selectionSort(arr);
             case "Insertion Sort":
@@ -51,50 +51,54 @@ export const Array = ({ algorithm, mode }: AppProps) => {
             const current = pair[0] as Element;
             const next = pair[1] as Element;
             const swap = pair[2] as Boolean;
-            const currentStyle: CSSStyleDeclaration = document.getElementById(
-                `element-${arr.indexOf(current)}`
-            )?.style!;
-            const nextStyle: CSSStyleDeclaration = document.getElementById(
-                `element-${arr.indexOf(next)}`
-            )?.style!;
 
-            if (currentStyle && nextStyle) {
-                // Change element background to blueviolet to indicate visit
-                currentStyle.background = "blueviolet";
-                nextStyle.background = "blueviolet";
+            // Change element background to blueviolet to indicate visit
+            ElementUtils.changeElementColor(arr, current, "blueviolet");
+            ElementUtils.changeElementColor(arr, next, "blueviolet");
 
+            setTimeout(() => {
                 // Swap element indexes in array
-                if (swap) {
-                    handleUpdateArray(current);
+                if (swap) handleUpdateArray(current, next);
 
-                    // Change element background to green to indicate swap
-                    currentStyle.background = "green";
-                    nextStyle.background = "green";
-                }
+                // Reset element background to black
+                ElementUtils.changeElementColor(arr, current, "black");
+                ElementUtils.changeElementColor(arr, next, "black");
 
-                setTimeout(() => {
-                    // Reset element background to black
-                    currentStyle.background = "black";
-                    nextStyle.background = "black";
-
-                    // Recursive call
-                    animateSort(sortedArr);
-                }, 100);
-            }
-        }
+                // Recursive call
+                animateSort(sortedArr);
+            }, 100);
+        } else highlightSorted(0);
     };
 
-    const handleUpdateArray = (current: Element): void => {
+    const handleUpdateArray = (current: Element, next: Element): void => {
         setArr((arr) => {
             const newArr = [...arr];
             const currIndex = newArr.indexOf(current);
-            const nextIndex = currIndex + 1;
+            const nextIndex = newArr.indexOf(next);
 
             [newArr[currIndex], newArr[nextIndex]] = [
                 newArr[nextIndex],
                 newArr[currIndex],
             ];
             return newArr;
+        });
+    };
+
+    const highlightSorted = (index: number): void => {
+        if (arr[index]) {
+            setTimeout(() => {
+                ElementUtils.changeElementColor(arr, arr[index], "green");
+                highlightSorted(index + 1);
+            }, 25);
+        }
+    };
+
+    const resetArr = (): void => {
+        const temp = [...arr];
+        temp.splice(0, temp.length, ...ElementUtils.initArray());
+        setArr(temp);
+        arr.forEach((element) => {
+            ElementUtils.changeElementColor(arr, element, "black");
         });
     };
 
@@ -106,7 +110,7 @@ export const Array = ({ algorithm, mode }: AppProps) => {
                 return (
                     <div
                         className="element"
-                        id={`element-${key}`}
+                        id={`element-${arr.indexOf(element)}`}
                         key={key}
                         style={{ height: length }}
                     >

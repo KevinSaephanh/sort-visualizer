@@ -54,4 +54,17 @@ export default class ElementUtils {
         [temp[currIndex], temp[nextIndex]] = [temp[nextIndex], temp[currIndex]];
         return temp;
     };
+
+    static changeElementColor = (
+        arr: Element[],
+        element: Element,
+        color: string
+    ) => {
+        if (arr[arr.indexOf(element)]) {
+            const style: CSSStyleDeclaration = document.getElementById(
+                `element-${arr.indexOf(element)}`
+            )?.style!;
+            style.background = color;
+        }
+    };
 }
