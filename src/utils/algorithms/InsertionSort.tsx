@@ -2,15 +2,15 @@ import Element from "../../models/Element";
 
 export const insertionSort = (arr: Element[]): (Element | Boolean)[][] => {
     const swapSet: (Element | Boolean)[][] = [];
-    const copy = [...arr];
 
-    for (let i = 1; i < copy.length; i++) {
-        const current: Element = copy[i];
+    for (let i = 1; i < arr.length; i++) {
+        const current: Element = arr[i];
         for (let j = i - 1; j >= 0; j--) {
-            if (current.length < copy[j].length) {
-                [copy[j], copy[j + 1]] = [current, copy[j]];
-                swapSet.push([copy[j], current, true]);
-            } else swapSet.push([copy[j], current, false]);
+            const previous: Element = arr[j];
+            if (current.length < previous.length) {
+                [arr[j], arr[j + 1]] = [current, previous];
+                swapSet.push([previous, current, true]);
+            } else swapSet.push([previous, current, false]);
         }
     }
 

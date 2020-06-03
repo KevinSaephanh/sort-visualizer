@@ -24,22 +24,14 @@ export default class ElementUtils {
     };
 
     static isSorted = (arr: Element[]): Boolean => {
-        const lengths: number[] = [];
+        for (let i = 1; i < arr.length - 1; i++) {
+            const current: Element = arr[i];
+            const previous: Element = arr[i - 1];
 
-        arr.forEach((element: Element) => {
-            // Check if the element length is lower/equal to all numbers in lengths array
-            if (!ElementUtils.hasLowerLength(lengths, arr.indexOf(element)))
+            if (current && previous && current.length < previous.length)
                 return false;
-
-            // Push length to array and continue to next iteration
-            lengths.push(element.length);
-        });
+        }
         return true;
-    };
-
-    static hasLowerLength = (nums: number[], n: number): Boolean => {
-        if (nums.length <= 0) return true;
-        return Math.max(...nums) >= n;
     };
 
     static swap = (

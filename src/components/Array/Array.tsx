@@ -17,8 +17,8 @@ export const Array = ({ algorithm, mode }: AppProps) => {
     React.useEffect(() => {
         switch (mode) {
             case "Sort":
-                const sortedArr = sort(algorithm)!;
-                animateSort(sortedArr);
+                const swapSet = sort(algorithm)!;
+                animateSort(swapSet);
                 break;
             case "Reset":
                 resetArr();
@@ -28,26 +28,33 @@ export const Array = ({ algorithm, mode }: AppProps) => {
         }
     }, [mode]);
 
+    React.useEffect(() => {
+        // Need an isSorting state to wait for sorting to complete before highlight
+        if (ElementUtils.isSorted(arr)) highlightSorted(0);
+    }, [arr]);
+
     const sort = (sorter: string): (Element | Boolean)[][] | null => {
+        const temp = [...arr];
         switch (sorter) {
             case "Bubble Sort":
-                return SortUtils.bubbleSort(arr);
+                return SortUtils.bubbleSort(temp);
             case "Quick Sort":
-                return SortUtils.quickSort(arr);
+                const swapSet: (Element | Boolean)[][] = [];
+                return SortUtils.quickSort(temp, 0, temp.length - 1, swapSet);
             case "Merge Sort":
-                return null;
-            case "Selection Sort":
-                return SortUtils.selectionSort(arr);
+                return SortUtils.mergeSort(temp, 0, temp.length - 1);
             case "Insertion Sort":
-                return SortUtils.insertionSort(arr);
+                return SortUtils.insertionSort(temp);
+            case "Selection Sort":
+                return SortUtils.selectionSort(temp);
             default:
                 return null;
         }
     };
 
-    const animateSort = (sortedArr: (Element | Boolean)[][]): void => {
-        if (sortedArr.length > 0) {
-            const pair: (Element | Boolean)[] = sortedArr.shift()!;
+    const animateSort = (swapSet: (Element | Boolean)[][]): void => {
+        if (swapSet.length > 0) {
+            const pair: (Element | Boolean)[] = swapSet.shift()!;
             const current = pair[0] as Element;
             const next = pair[1] as Element;
             const swap = pair[2] as Boolean;
@@ -65,9 +72,9 @@ export const Array = ({ algorithm, mode }: AppProps) => {
                 ElementUtils.changeElementColor(arr, next, "black");
 
                 // Recursive call
-                animateSort(sortedArr);
+                animateSort(swapSet);
             }, 100);
-        } else highlightSorted(0);
+        }
     };
 
     const handleUpdateArray = (current: Element, next: Element): void => {
@@ -89,7 +96,7 @@ export const Array = ({ algorithm, mode }: AppProps) => {
             setTimeout(() => {
                 ElementUtils.changeElementColor(arr, arr[index], "green");
                 highlightSorted(index + 1);
-            }, 25);
+            }, 35);
         }
     };
 
