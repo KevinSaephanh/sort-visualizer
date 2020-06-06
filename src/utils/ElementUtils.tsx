@@ -50,13 +50,13 @@ export default class ElementUtils {
     static changeElementColor = (
         arr: Element[],
         element: Element,
-        color: string
+        hsl: string
     ) => {
         if (arr[arr.indexOf(element)]) {
             const style: CSSStyleDeclaration = document.getElementById(
                 `element-${arr.indexOf(element)}`
             )?.style!;
-            style.background = color;
+            style.background = `linear-gradient(to bottom right, hsl(0, 3%, 50%), hsl(${hsl}))`;
         }
     };
 }

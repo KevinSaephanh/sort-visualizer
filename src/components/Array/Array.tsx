@@ -66,17 +66,17 @@ export const Array = ({
             const next = pair[1] as Element;
             const swap = pair[2] as Boolean;
 
-            // Change element background to blueviolet to indicate visit
-            ElementUtils.changeElementColor(arr, current, "blueviolet");
-            ElementUtils.changeElementColor(arr, next, "blueviolet");
+            // Change element color to new hsl to indicate visit
+            ElementUtils.changeElementColor(arr, current, "276, 100%, 50%");
+            ElementUtils.changeElementColor(arr, next, "276, 100%, 50%");
 
             setTimeout(() => {
                 // Swap element indexes in array
                 if (swap) handleUpdateArray(current, next);
 
-                // Reset element background to black
-                ElementUtils.changeElementColor(arr, current, "black");
-                ElementUtils.changeElementColor(arr, next, "black");
+                // Reset element color to original hsl
+                ElementUtils.changeElementColor(arr, current, "219, 100%, 50%");
+                ElementUtils.changeElementColor(arr, next, "219, 100%, 50%");
 
                 // Recursive call
                 animateSort(swapSet);
@@ -86,22 +86,18 @@ export const Array = ({
 
     const handleUpdateArray = (current: Element, next: Element): void => {
         setArr((arr) => {
-            const newArr = [...arr];
-            const currIndex = newArr.indexOf(current);
-            const nextIndex = newArr.indexOf(next);
-
-            [newArr[currIndex], newArr[nextIndex]] = [
-                newArr[nextIndex],
-                newArr[currIndex],
-            ];
-            return newArr;
+            return ElementUtils.swap([...arr], current, next);
         });
     };
 
     const highlightSorted = (index: number): void => {
         if (arr[index]) {
             setTimeout(() => {
-                ElementUtils.changeElementColor(arr, arr[index], "green");
+                ElementUtils.changeElementColor(
+                    arr,
+                    arr[index],
+                    "155, 100%, 50%"
+                );
                 highlightSorted(index + 1);
             }, 35);
         } else {
@@ -115,14 +111,14 @@ export const Array = ({
         temp.splice(0, temp.length, ...ElementUtils.initArray());
         setArr(temp);
         arr.forEach((element) => {
-            ElementUtils.changeElementColor(arr, element, "black");
+            ElementUtils.changeElementColor(arr, element, "219, 100%, 50%");
         });
     };
 
     return (
         <div className="content">
             {arr.map((element, key) => {
-                const { length, image } = element;
+                const { length } = element;
 
                 return (
                     <div
@@ -130,9 +126,7 @@ export const Array = ({
                         id={`element-${arr.indexOf(element)}`}
                         key={key}
                         style={{ height: length }}
-                    >
-                        {/* <img src={image} alt="" style={{ height: length }} /> */}
-                    </div>
+                    ></div>
                 );
             })}
         </div>
