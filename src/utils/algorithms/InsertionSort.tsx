@@ -1,5 +1,11 @@
 import Element from "../../models/Element";
 
+/**
+ * Best Case: O(n)
+ * Average Case: O(n^2)
+ * Worst Case: O(n^2)
+ */
+
 export const insertionSort = (arr: Element[]): (Element | Boolean)[][] => {
     const swapSet: (Element | Boolean)[][] = [];
 

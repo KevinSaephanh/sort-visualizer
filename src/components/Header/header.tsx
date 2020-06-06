@@ -5,6 +5,8 @@ import "./Header.css";
 type AppProps = {
     algorithm: string;
     mode: string;
+    sorting: Boolean;
+    sorted: Boolean;
     handleClickAlgorithm: (algorithm: any) => any;
     handleClickMode: (mode: any) => any;
 };
@@ -12,6 +14,8 @@ type AppProps = {
 export const Header = ({
     algorithm,
     mode,
+    sorting,
+    sorted,
     handleClickAlgorithm,
     handleClickMode,
 }: AppProps) => {
@@ -45,12 +49,6 @@ export const Header = ({
                                 Insertion Sort
                             </Button>
                             <Button
-                                name="Merge Sort"
-                                onClick={handleClickAlgorithm}
-                            >
-                                Merge Sort
-                            </Button>
-                            <Button
                                 name="Selection Sort"
                                 onClick={handleClickAlgorithm}
                             >
@@ -61,6 +59,7 @@ export const Header = ({
                     <Button
                         className="reset-btn"
                         name="Reset"
+                        disabled={sorting === true}
                         onClick={handleClickMode}
                     >
                         Reset
@@ -68,7 +67,11 @@ export const Header = ({
                     <Button
                         className="sort-btn"
                         name="Sort"
-                        disabled={algorithm === "Algorithms"}
+                        disabled={
+                            algorithm === "Algorithms" ||
+                            sorting === true ||
+                            sorted === true
+                        }
                         onClick={handleClickMode}
                     >
                         Sort

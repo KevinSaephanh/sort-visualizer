@@ -1,5 +1,9 @@
 import Element from "../../models/Element";
 
+/**
+ * Optimized implementation always runs at O(n^2)
+ */
+
 export const bubbleSort = (arr: Element[]): (Element | Boolean)[][] => {
     const swapSet: (Element | Boolean)[][] = [];
     let swapped: Boolean = false;

@@ -7,17 +7,27 @@ import "./Array.css";
 type AppProps = {
     algorithm: string;
     mode: string;
+    sorting: Boolean;
+    toggleSorting: () => void;
+    toggleSorted: () => void;
 };
 
 const elements: Element[] = ElementUtils.initArray();
 
-export const Array = ({ algorithm, mode }: AppProps) => {
+export const Array = ({
+    algorithm,
+    mode,
+    sorting,
+    toggleSorting,
+    toggleSorted,
+}: AppProps) => {
     const [arr, setArr] = React.useState<Element[]>(elements);
 
     React.useEffect(() => {
         switch (mode) {
             case "Sort":
                 const swapSet = sort(algorithm)!;
+                toggleSorting();
                 animateSort(swapSet);
                 break;
             case "Reset":
@@ -29,20 +39,18 @@ export const Array = ({ algorithm, mode }: AppProps) => {
     }, [mode]);
 
     React.useEffect(() => {
-        // Need an isSorting state to wait for sorting to complete before highlight
-        if (ElementUtils.isSorted(arr)) highlightSorted(0);
+        // Messes up on insertionSort
+        if (ElementUtils.isSorted(arr) && !sorting) highlightSorted(0);
     }, [arr]);
 
     const sort = (sorter: string): (Element | Boolean)[][] | null => {
         const temp = [...arr];
+        const swapSet: (Element | Boolean)[][] = [];
         switch (sorter) {
             case "Bubble Sort":
                 return SortUtils.bubbleSort(temp);
             case "Quick Sort":
-                const swapSet: (Element | Boolean)[][] = [];
                 return SortUtils.quickSort(temp, 0, temp.length - 1, swapSet);
-            case "Merge Sort":
-                return SortUtils.mergeSort(temp, 0, temp.length - 1);
             case "Insertion Sort":
                 return SortUtils.insertionSort(temp);
             case "Selection Sort":
@@ -97,6 +105,9 @@ export const Array = ({ algorithm, mode }: AppProps) => {
                 ElementUtils.changeElementColor(arr, arr[index], "green");
                 highlightSorted(index + 1);
             }, 35);
+        } else {
+            toggleSorting();
+            toggleSorted();
         }
     };
 

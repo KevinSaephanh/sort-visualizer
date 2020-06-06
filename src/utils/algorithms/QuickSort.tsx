@@ -1,5 +1,11 @@
 import Element from "../../models/Element";
 
+/**
+ * Best Case: O(n log(n))
+ * Average Case: O(n log(n))
+ * Worst Case: O(n^2)
+ */
+
 export const quickSort = (
     arr: Element[],
     low: number,
@@ -10,37 +16,38 @@ export const quickSort = (
         const pi: number = partition(arr, low, high, swapSet);
 
         // Before partition
-        quickSort(arr, low, pi - 1, swapSet);
+        if (low < pi - 1) quickSort(arr, low, pi - 1, swapSet);
 
         // After partition
-        quickSort(arr, pi, high, swapSet);
+        if (high > pi) quickSort(arr, pi, high, swapSet);
     }
-    console.log(swapSet.length);
     return swapSet;
 };
 
+// Hoare partition scheme initialized with indexes from edges of array
+// Starting at each edge, traverse toward each other until an inversion is detected
+// Swap inverted elements
 const partition = (
     arr: Element[],
     low: number,
     high: number,
     swapSet: (Element | Boolean)[][]
 ): number => {
-    const pivot: number = Math.floor((low + high) / 2);
-    const left: Element = arr[low];
-    const right: Element = arr[high];
+    const pivot: Element = arr[Math.floor((low + high) / 2)];
 
-    if (left && right) {
-        while (low < high) {
-            while (left.length < arr[pivot].length) low++;
-            while (right.length < arr[pivot].length) high++;
+    while (low <= high) {
+        // Forward traversal and comparison until pivot is reached
+        while (arr[low].length < pivot.length) low++;
 
-            if (low <= high) {
-                swapSet.push([left, right, true]);
-                [arr[low], arr[high]] = [right, left];
-                low++;
-                high--;
-            } else swapSet.push([left, right, false]);
-        }
+        // Backward traversal and comparison until pivot is reached
+        while (arr[high].length > pivot.length) high--;
+
+        if (low <= high) {
+            swapSet.push([arr[low], arr[high], true]);
+            [arr[low], arr[high]] = [arr[high], arr[low]];
+            low++;
+            high--;
+        } else swapSet.push([arr[low], arr[high], false]);
     }
 
     return low;

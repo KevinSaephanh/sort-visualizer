@@ -1,5 +1,9 @@
 import Element from "../../models/Element";
 
+/**
+ * Selection Sort always runs at O(n^2) because it uses 2 loops
+ */
+
 export const selectionSort = (arr: Element[]): (Element | Boolean)[][] => {
     const swapSet: (Element | Boolean)[][] = [];
 
