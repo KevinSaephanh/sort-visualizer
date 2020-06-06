@@ -48,7 +48,6 @@ export const App = () => {
             <Array
                 algorithm={algorithm}
                 mode={mode}
-                sorting={sorting}
                 toggleSorting={toggleSorting}
                 toggleSorted={toggleSorted}
             />

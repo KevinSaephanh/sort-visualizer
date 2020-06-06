@@ -7,7 +7,6 @@ import "./Array.css";
 type AppProps = {
     algorithm: string;
     mode: string;
-    sorting: Boolean;
     toggleSorting: () => void;
     toggleSorted: () => void;
 };
@@ -17,16 +16,17 @@ const elements: Element[] = ElementUtils.initArray();
 export const Array = ({
     algorithm,
     mode,
-    sorting,
     toggleSorting,
     toggleSorted,
 }: AppProps) => {
     const [arr, setArr] = React.useState<Element[]>(elements);
+    const [sorting, setSorting] = React.useState<Boolean>(false);
 
     React.useEffect(() => {
         switch (mode) {
             case "Sort":
                 const swapSet = sort(algorithm)!;
+                setSorting(true);
                 toggleSorting();
                 animateSort(swapSet);
                 break;
@@ -39,9 +39,8 @@ export const Array = ({
     }, [mode]);
 
     React.useEffect(() => {
-        // Messes up on insertionSort
         if (ElementUtils.isSorted(arr) && !sorting) highlightSorted(0);
-    }, [arr]);
+    }, [sorting]);
 
     const sort = (sorter: string): (Element | Boolean)[][] | null => {
         const temp = [...arr];
@@ -82,7 +81,7 @@ export const Array = ({
                 // Recursive call
                 animateSort(swapSet);
             }, 100);
-        }
+        } else setSorting(false);
     };
 
     const handleUpdateArray = (current: Element, next: Element): void => {
