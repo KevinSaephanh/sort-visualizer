@@ -8,17 +8,11 @@ type AppProps = {
     algorithm: string;
     mode: string;
     toggleSorting: () => void;
-    toggleSorted: () => void;
 };
 
 const elements: Element[] = ElementUtils.initArray();
 
-export const Array = ({
-    algorithm,
-    mode,
-    toggleSorting,
-    toggleSorted,
-}: AppProps) => {
+export const Array = ({ algorithm, mode, toggleSorting }: AppProps) => {
     const [arr, setArr] = React.useState<Element[]>(elements);
     const [sorting, setSorting] = React.useState<Boolean>(false);
 
@@ -102,7 +96,6 @@ export const Array = ({
             }, 35);
         } else {
             toggleSorting();
-            toggleSorted();
         }
     };
 

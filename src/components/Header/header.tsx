@@ -6,7 +6,6 @@ type AppProps = {
     algorithm: string;
     mode: string;
     sorting: Boolean;
-    sorted: Boolean;
     handleClickAlgorithm: (algorithm: any) => any;
     handleClickMode: (mode: any) => any;
 };
@@ -15,10 +14,10 @@ export const Header = ({
     algorithm,
     mode,
     sorting,
-    sorted,
     handleClickAlgorithm,
     handleClickMode,
 }: AppProps) => {
+    console.log(mode);
     return (
         <Navbar bg="primary" expand="lg">
             <Navbar.Brand href="">Sort Visualizer</Navbar.Brand>
@@ -67,11 +66,7 @@ export const Header = ({
                     <Button
                         className="sort-btn"
                         name="Sort"
-                        disabled={
-                            algorithm === "Algorithms" ||
-                            sorting === true ||
-                            sorted === true
-                        }
+                        disabled={algorithm === "Algorithms" || mode === "Sort"}
                         onClick={handleClickMode}
                     >
                         Sort
