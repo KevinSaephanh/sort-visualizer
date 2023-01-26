@@ -1,6 +1,6 @@
 import * as React from 'react';
+import { Header } from './components/Header/Header';
 import { Array } from './components/Array/Array';
-import { Header } from './components/Header/header';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
