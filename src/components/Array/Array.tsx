@@ -35,6 +35,7 @@ export const Array = ({ algorithm, mode, toggleSorting }: AppProps) => {
 
   React.useEffect(() => {
     if (ElementUtils.isSorted(arr) && !sorting) highlightSorted(0);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sorting]);
 
   const sort = (sorter: string): (Element | Boolean)[][] | null => {
